@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jairo Leiva Aravena | Portafolio Neón</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Matrix Rain -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <nav>
+        <div class="logo">JLA.</div>
+        <ul class="nav-links">
+            <li><a href="#about" class="hover-target">Inicio</a></li>
+            <li><a href="#skills" class="hover-target">Habilidades</a></li>
+            <li><a href="#projects" class="hover-target">Proyectos</a></li>
+            <li><a href="#contact" class="hover-target">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Hero -->
+        <section id="about" class="section hero">
+            <div class="floating-text">
+                <h1 class="neon-text-primary">Jairo Leiva Aravena</h1>
+                <h2>Ingeniero en Conectividad y Redes</h2>
+            </div>
+            <p style="max-width: 600px; margin: 20px auto 40px; font-size: 1.2rem; line-height: 1.6; text-shadow: 0 0 5px rgba(0,0,0,1);">
+                Especialista en ciberseguridad, administración de sistemas Linux, automatización con Python y contenedores Docker.
+            </p>
+            <a href="#contact" class="neon-button hover-target">Contactar</a>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills" class="section">
+            <h2 class="section-title">Habilidades</h2>
+            <div class="skills-grid floating-text">
+                <div class="skill-item hover-target">
+                    <i class="fa-brands fa-linux skill-icon"></i>
+                    <span>Linux</span>
+                </div>
+                <div class="skill-item hover-target">
+                    <i class="fa-brands fa-python skill-icon"></i>
+                    <span>Python</span>
+                </div>
+                <div class="skill-item hover-target">
+                    <i class="fa-brands fa-docker skill-icon"></i>
+                    <span>Docker</span>
+                </div>
+                <div class="skill-item hover-target">
+                    <i class="fa-solid fa-network-wired skill-icon"></i>
+                    <span>Redes CCNA</span>
+                </div>
+                <div class="skill-item hover-target">
+                    <i class="fa-solid fa-shield-halved skill-icon"></i>
+                    <span>Ciberseguridad</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="section">
+            <h2 class="section-title">Proyectos</h2>
+            <div class="projects-grid">
+                <!-- Don Vicente -->
+                <div class="project-card hover-target">
+                    <div class="project-image" style="background: #fff url('don-vicente-logo.png') center/contain no-repeat;"></div>
+                    <div class="project-content">
+                        <h3>Don Vicente</h3>
+                        <p>Plataforma web dinámica para gestión y presentación de servicios.</p>
+                        <a href="https://local-don-vicente.vercel.app/" target="_blank" class="project-link hover-target">
+                            Ver Proyecto <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CCNA -->
+                <div class="project-card hover-target">
+                    <div class="project-image" style="background: #fff url('https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg') center/50% no-repeat;"></div>
+                    <div class="project-content">
+                        <h3>Despliegue CCNA</h3>
+                        <p>Diseño e implementación de topologías de red avanzadas con enrutamiento OSPF, VLANs y seguridad en capa 2.</p>
+                        <a href="#" class="project-link hover-target">
+                            Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Python Docker -->
+                <div class="project-card hover-target">
+                    <div class="project-image" style="background: #fff url('https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg') center/50% no-repeat;"></div>
+                    <div class="project-content">
+                        <h3>Automatización Python & Docker</h3>
+                        <p>Scripting en Python para monitoreo de redes, y contenerización de servicios utilizando Docker y Compose.</p>
+                        <a href="#" class="project-link hover-target">
+                            Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="section">
+            <h2 class="section-title">Contacto</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; text-shadow: 0 0 5px rgba(0,0,0,1);">¿Listo para asegurar y optimizar tu infraestructura?</p>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <p><i class="fa-solid fa-envelope"></i> jairoleiva.a1@gmail.com</p>
+                    <p><i class="fa-solid fa-location-dot"></i> Santiago, Chile</p>
+                </div>
+                
+                <form action="https://formsubmit.co/jairoleiva.a1@gmail.com" method="POST" id="contact-form" class="contact-form">
+                    <!-- Configuración de FormSubmit -->
+                    <input type="hidden" name="_subject" value="¡Nuevo mensaje desde tu Portafolio Neón!">
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <div class="form-group">
+                        <input type="text" name="Nombre" id="name" required placeholder="Nombre Completo" class="hover-target">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="Telefono" id="phone" required placeholder="Número de Teléfono" class="hover-target">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="Mensaje" id="message" rows="4" required placeholder="¿En qué te puedo ayudar?" class="hover-target"></textarea>
+                    </div>
+                    <button type="submit" class="neon-button hover-target" style="width: 100%; cursor: inherit;">Enviar Mensaje</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Jairo Leiva Aravena. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="#" class="hover-target"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="hover-target"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#" class="hover-target"><i class="fa-brands fa-docker"></i></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
