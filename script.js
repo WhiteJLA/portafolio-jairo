@@ -71,43 +71,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // CONTACT FORM SUBMISSION
-    const contactForm = document.getElementById('contact-form');
-    if(contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = contactForm.querySelector('button');
-            const originalText = btn.innerText;
-            btn.innerText = "Enviando...";
-            
-            const formData = new FormData(contactForm);
-            
-            fetch(contactForm.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    btn.innerText = "¡Enviado con éxito!";
-                    btn.style.backgroundColor = "#fff";
-                    btn.style.color = "#000";
-                    contactForm.reset();
-                } else {
-                    btn.innerText = "Error al enviar";
-                }
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.style.backgroundColor = "";
-                    btn.style.color = "";
-                }, 3000);
-            }).catch(error => {
-                btn.innerText = "Error de red";
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                }, 3000);
-            });
-        });
-    }
 });
