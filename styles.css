@@ -301,6 +301,47 @@ footer {
     transform: scale(1.2);
 }
 
+/* RESPONSIVE DESIGN FOR MOBILE */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+        border-radius: 20px;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero h2 {
+        font-size: 1.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+    
+    .contact-container {
+        padding: 20px;
+    }
+}
+
 /* CONTACT FORM */
 .contact-container {
     display: flex;
