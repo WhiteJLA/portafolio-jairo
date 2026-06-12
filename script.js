@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // NEON SWARM INTERACTIVE BACKGROUND (High Visual Impact & Physics)
+    // GRID MATEMÁTICO DINÁMICO (Estilo peo.html de alta resolución)
     const canvas = document.getElementById('matrix-canvas');
     const ctx = canvas.getContext('2d');
     
@@ -9,142 +9,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     resizeCanvas();
     
-    let particles = [];
-    let mouse = { x: canvas.width/2, y: canvas.height/2, active: false };
+    let mouse = { x: canvas.width / 2, y: canvas.height / 2, targetX: canvas.width / 2, targetY: canvas.height / 2 };
     
-    function initSwarm() {
-        particles = [];
-        const numParticles = Math.floor((canvas.width * canvas.height) / 9000); // Alta densidad
-        for (let i = 0; i < numParticles; i++) {
-            particles.push(new SwarmParticle());
-        }
-    }
-
-    class SwarmParticle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 2;
-            this.vy = (Math.random() - 0.5) * 2;
-            this.baseX = this.x;
-            this.baseY = this.y;
-            this.size = Math.random() * 2 + 1;
-            this.color = '#39ff14'; // Verde Neón
-        }
-        
-        update() {
-            if (mouse.active) {
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                
-                // Efecto de Vórtice / Gravedad hacia el ratón
-                if (distance < 350) {
-                    let forceDirectionX = dx / distance;
-                    let forceDirectionY = dy / distance;
-                    
-                    // Rotación (swirl)
-                    let swirlForceX = forceDirectionY;
-                    let swirlForceY = -forceDirectionX;
-                    
-                    let force = (350 - distance) / 350;
-                    
-                    this.vx += forceDirectionX * force * 0.8 + swirlForceX * force * 0.5;
-                    this.vy += forceDirectionY * force * 0.8 + swirlForceY * force * 0.5;
-                }
-            } else {
-                // Si el ratón no está activo, las partículas regresan suavemente a sus bases
-                let dx = this.baseX - this.x;
-                let dy = this.baseY - this.y;
-                this.vx += dx * 0.002;
-                this.vy += dy * 0.002;
+    const spacing = 22; // Alta resolución (menor espaciado = más puntos)
+    const points = [];
+    
+    function initGrid() {
+        points.length = 0;
+        // Se expande un poco más allá de los bordes para que la onda no se corte
+        for (let x = -50; x < canvas.width + 50; x += spacing) {
+            for (let y = -50; y < canvas.height + 50; y += spacing) {
+                points.push({ originX: x, originY: y, x: x, y: y });
             }
-            
-            // Fricción para evitar velocidad infinita
-            this.vx *= 0.92;
-            this.vy *= 0.92;
-            
-            // Movimiento errático base
-            this.vx += (Math.random() - 0.5) * 0.6;
-            this.vy += (Math.random() - 0.5) * 0.6;
-            
-            this.x += this.vx;
-            this.y += this.vy;
-        }
-        
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = this.color;
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = this.color;
-            ctx.fill();
-            ctx.shadowBlur = 0; // reset
         }
     }
+    initGrid();
 
-    initSwarm();
-
-    // Eventos del ratón
+    // Eventos del ratón para el grid
     window.addEventListener('mousemove', (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-        mouse.active = true;
-    });
-    
-    window.addEventListener('mouseout', () => {
-        mouse.active = false;
+        mouse.targetX = e.clientX;
+        mouse.targetY = e.clientY;
     });
 
-    // Explosión al hacer click
-    window.addEventListener('click', (e) => {
-        let clickX = e.clientX;
-        let clickY = e.clientY;
-        for (let i = 0; i < particles.length; i++) {
-            let dx = particles[i].x - clickX;
-            let dy = particles[i].y - clickY;
-            let distance = Math.sqrt(dx*dx + dy*dy);
-            if (distance < 400) {
-                let force = (400 - distance) / 400;
-                // Empuje explosivo masivo
-                particles[i].vx += (dx / distance) * force * 30;
-                particles[i].vy += (dy / distance) * force * 30;
-            }
-        }
-    });
-
-    function animateSwarm() {
-        // Efecto de rastro de luz (Light Trail) en vez de borrar todo
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function animateGrid(time) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
+        // Suavizado del movimiento del mouse (LERP)
+        mouse.x += (mouse.targetX - mouse.x) * 0.1;
+        mouse.y += (mouse.targetY - mouse.y) * 0.1;
+
+        ctx.fillStyle = '#39ff14';
+
+        points.forEach(p => {
+            // Cálculo de distancia al mouse
+            const dx = mouse.x - p.originX;
+            const dy = mouse.y - p.originY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
             
-            // Rayos láser hacia el ratón si están súper cerca
-            if (mouse.active) {
-                let dx = mouse.x - particles[i].x;
-                let dy = mouse.y - particles[i].y;
-                let dist = Math.sqrt(dx*dx + dy*dy);
-                if (dist < 150) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(57, 255, 20, ${1 - dist/150})`;
-                    ctx.lineWidth = 1.5;
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(mouse.x, mouse.y);
-                    ctx.stroke();
-                }
-            }
-        }
-        requestAnimationFrame(animateSwarm);
+            // Alteración matemática usando ondas
+            // Reduje un poco la amplitud de 15 a 20 para que sea más dramático en alta resolución
+            const force = Math.sin(distance * 0.05 - time * 0.004) * 20;
+            
+            // Desplazamiento
+            const angle = Math.atan2(dy, dx);
+            p.x = p.originX + Math.cos(angle) * force;
+            p.y = p.originY + Math.sin(angle) * force;
+
+            // Renderizar los nodos matemáticos con desvanecimiento radial
+            // Color Neón Verde con opacidad dinámica
+            const opacity = Math.max(0.15, 1 - distance / 400);
+            ctx.fillStyle = `rgba(57, 255, 20, ${opacity})`;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        requestAnimationFrame(animateGrid);
     }
     
-    animateSwarm();
+    // Iniciar el renderizado
+    requestAnimationFrame(animateGrid);
     
     window.addEventListener('resize', () => {
         resizeCanvas();
-        initSwarm();
+        initGrid();
     });
 
     // SMOOTH SCROLL
