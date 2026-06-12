@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function resizeCanvas() {
         canvas.width = window.innerWidth;
-        canvas.height = Math.max(window.innerHeight, document.documentElement.scrollHeight);
+        canvas.height = window.innerHeight;
     }
     resizeCanvas();
     
@@ -87,8 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Eventos del ratón
     window.addEventListener('mousemove', (e) => {
-        mouse.x = e.x;
-        mouse.y = e.y + window.scrollY;
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
         mouse.active = true;
     });
     
@@ -98,8 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Explosión al hacer click
     window.addEventListener('click', (e) => {
-        let clickX = e.x;
-        let clickY = e.y + window.scrollY;
+        let clickX = e.clientX;
+        let clickY = e.clientY;
         for (let i = 0; i < particles.length; i++) {
             let dx = particles[i].x - clickX;
             let dy = particles[i].y - clickY;
