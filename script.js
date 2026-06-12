@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance = Math.sqrt(dx * dx + dy * dy);
             
             // Alteración matemática usando ondas
-            // Reduje un poco la amplitud de 15 a 20 para que sea más dramático en alta resolución
             const force = Math.sin(distance * 0.05 - time * 0.004) * 20;
             
             // Desplazamiento
@@ -55,13 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
             p.x = p.originX + Math.cos(angle) * force;
             p.y = p.originY + Math.sin(angle) * force;
 
-            // Renderizar los nodos matemáticos con desvanecimiento radial
-            // Color Neón Verde con opacidad dinámica
-            const opacity = Math.max(0.15, 1 - distance / 400);
+            // Renderizar los nodos matemáticos
+            // Opacidad base muy alta (0.6) para que NUNCA se vea el fondo negro, 
+            // con un pequeño brillo extra (hasta 1.0) cerca del ratón.
+            const opacity = Math.max(0.6, 1 - distance / 600);
             ctx.fillStyle = `rgba(57, 255, 20, ${opacity})`;
             
             ctx.beginPath();
-            ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+            ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
             ctx.fill();
         });
 
